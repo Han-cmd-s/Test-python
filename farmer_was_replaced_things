@@ -1,0 +1,42 @@
+clear()
+def is_even(n):
+	return n % 2 == 0
+	
+size = get_world_size()
+
+
+for i in range(get_world_size()):
+	while num_items(Items.Hay) < 1000000:
+		for j in range(get_world_size()):
+			if get_entity_type() == Entities.grass and can_harvest():
+				harvest()
+				move(North)
+			elif get_entity_type() != Entities.Grass:
+				plant(Entities.Grass)
+				move(North)
+		move(East)
+		
+while num_items(Items.Wood) < 1000000:
+	for y in range(size):
+		for x in range(size):
+			if can_harvest():
+				harvest()
+			if get_entity_type() != Entities.tree and get_entity_type() != Entities.Bush:
+				if is_even(x + y):
+					plant(Entities.Tree)
+				else:
+					plant(Entities.Bush)
+			move(North)
+		move(East)
+	
+while num_items(Items.Carrot) < 100000:
+	for l in range(get_world_size()):
+		if get_entity_type() == Entities.Carrot and can_harvest():
+			harvest()
+			plant(Entities.Carrot)
+			move(North)
+		elif get_entity_type() != Entities.Carrot:
+			till()
+			plant(Entities.Carrot)
+			move(North)
+	move(East)
